@@ -42,7 +42,16 @@ Class Grafo{
 
 		//recibe id de nodo y retorna en un arreglo sus adyacentes.
 		public function getAdyacentes($v){
-			return $this->matrizA[$v];
+			$mensaje = "Adyacentes de $v<br>";
+			if($this->matrizA[$v] != null){
+				$mensaje = $mensaje."$v->";
+				foreach ($this->matrizA[$v] as $vertice => $peso) {
+					$mensaje = $mensaje."| $vertice | $peso |--";
+				}
+			}else{
+				return false;
+			}
+			return $mensaje;
 		}
 
 		public function getMatrizA(){
@@ -113,7 +122,6 @@ Class Grafo{
 				return false;
 			}
 			return true;
-
 		}
 
 }

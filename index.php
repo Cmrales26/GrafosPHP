@@ -27,6 +27,7 @@
     session_start();
     if (!isset($_SESSION["grafo"])) {
     $_SESSION["grafo"] = new grafo();
+    echo "<script language='javascript'>alert('Se estan implementando el uso de las cookies');</script>";
     }
 ?>
     <h2>Agregar vertice</h2>
@@ -64,8 +65,18 @@
             <input type="text" name="VerAdyacente" required>
             <input type="submit" value="Mostrar" >
         </form>
+        <?php
+            if (isset($_POST["VerAdyacente"])) {
+            echo "<br>";
+            $x = ( $_SESSION["grafo"]->getAdyacentes($_POST["VerAdyacente"]));
+            if ($x == null) {                
+                echo "<script language='javascript'>alert('No Existen Adyacentes del Vertice Ingresado');</script>";
+                } else {
+                    print_r($x);
+            }
+        }
+        ?>
     <br><hr>
-
 
     <h2>Ver grado</h2>
         <form action="index.php" method="post" id="Mostrar" >
@@ -73,6 +84,12 @@
             <input type="text" name="VerGrado" required>
             <input type="submit" value="Mostrar" >
         </form>
+        <?php
+            if (isset($_POST["VerGrado"])) {
+            echo "<br> El Grado del Vertice " . ($_POST["VerGrado"]) . " es: ";
+            print_r($_SESSION["grafo"]->grado($_POST["VerGrado"]));
+        }
+        ?>
     <br><hr>
 
 
@@ -103,7 +120,10 @@
         }
 
         if (isset($_POST["Origen"]) && isset($_POST["Destino"]) && isset($_POST["Peso"])) {
-            $_SESSION["grafo"]->agregarArista($_POST["Origen"], $_POST["Destino"], $_POST["Peso"]);
+            $a = $_SESSION["grafo"]->agregarArista($_POST["Origen"], $_POST["Destino"], $_POST["Peso"]);
+            if ($a == false){
+                echo "<script language='javascript'>alert('El origen o el destino no se encuentrar Regitrado');</script>";
+            }
         }
 
         if (isset($_POST["VerVertice"])) {
@@ -111,39 +131,17 @@
             print_r($_SESSION["grafo"]->getVertice($_POST["VerVertice"]));
         }
 
-        if (isset($_POST["VerAdyacente"])) {
-            echo "<br>";
-            $x = ( $_SESSION["grafo"]->getAdyacentes($_POST["VerAdyacente"]));
-            if ($x == null) {                
-                
-                echo "<script language='javascript'>alert('No Existen Adyacentes del Vertice Ingresado');</script>";
-                
-                } else {
-                print_r($x);
-            }
-        }
-
-        if (isset($_POST["VerGrado"])) {
-            echo "El Grado del Vertice " . ($_POST["VerGrado"]) . " es: ";
-            print_r($_SESSION["grafo"]->grado($_POST["VerGrado"]));
-        }
 
         if (isset($_POST["EliminarVertice"])) {
             $B = $_SESSION["grafo"]->eliminarVertice($_POST["EliminarVertice"]);
-            if ($B) {
-                echo "<br><hr>Vertice Eliminado<hr><br>";
-            } else {
-                
+            if (!$B) {
                 echo "<script language='javascript'>alert('Por favor Ingrese un Vertice Valido');</script>";               
             }
         }
 
         if (isset($_POST["OrigenE"]) && isset($_POST["DestinoE"])) {
             $B = $_SESSION["grafo"]->eliminarArista($_POST["OrigenE"], $_POST["DestinoE"]);
-            if ($B) {
-                echo "<br><hr>Arista Eliminada<hr><br>";
-            } else {
-            
+            if (!$B) {
                 echo "<script language='javascript'>alert('Por favor Ingrese una Arista Valida');</script>";               
             }
         }
