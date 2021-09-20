@@ -26,9 +26,5 @@ class Vertice{
 	public function setVisitado($v){
 		$this->visitado = $v;
 	}
-
-
 }
-
-
 ?>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type= "text/javascript" src= " vis/dist/vis.js"></script>
     <link href="vis/dist/vis.css" rel="stylesheet" type="text/css">
-    <title>Document</title>
+    <title>Visualizacion de Grafos con Vis.js</title>
 </head>
 	<style type="text/css">
 		body{
@@ -129,7 +129,7 @@
         }
 
         if (isset($_POST["EliminarVertice"])) {
-            $B = $_SESSION["grafo"]->eliminarVertice($_POST["EliminarVer"]);
+            $B = $_SESSION["grafo"]->eliminarVertice($_POST["EliminarVertice"]);
             if ($B) {
                 echo "<br><hr>Vertice Eliminado<hr><br>";
             } else {
@@ -175,7 +175,7 @@
                     if ($x == null){
                         echo "{from: '$x', to: '$y', label: '$l'}";
                     }else{
-                        echo "{from: '$x', to: '$y', label: '$l'},";                            
+                        echo "{from: '$x', to: '$y', label: '$l'},";
                         }
                     }
                 }
@@ -194,7 +194,7 @@
             arrows: {
                 to: {
                     enabled: true
-                }                    
+                }
             }
         }
     }

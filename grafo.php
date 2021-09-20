@@ -2,7 +2,7 @@
 include("vertice.php");
 Class Grafo{
 
-		
+	
 		private $matrizA;
 		private $vectorV;
 		private $dirigido;
@@ -30,9 +30,9 @@ Class Grafo{
 		}
 
 		//recibe id de nodo origen, destino y peso (opcional)
-		public function agregarArista($o, $d, $p = null){
-			if (isset($this->vectorV[$o]) && isset($this->vectorV[$d])){
-				$this->matrizA[$o][$d] = $p;
+		public function agregarArista($origen, $destino, $peso = null){
+			if (isset($this->vectorV[$origen]) && isset($this->vectorV[$destino])){
+				$this->matrizA[$origen][$destino] = $peso;
 			}else{
 				return false;
 			} 
@@ -85,9 +85,9 @@ Class Grafo{
 		}
 
 		//recibe id de vertice origen y destino
-		public function eliminarArista($o, $d){
-			if (isset($this->matrizA[$o][$d])){
-				unset($this->matrizA[$o][$d]);
+		public function eliminarArista($origen, $destino){
+			if (isset($this->matrizA[$origen][$destino])){
+				unset($this->matrizA[$origen][$destino]);
 			}else{
 				return false;
 			}
