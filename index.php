@@ -12,9 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;700&display=swap"
         rel="stylesheet">
-    <title>Visualizacion de Grafos con Vis.js</title>
+    <title>Visualización de Grafos con Vis.js</title>
 </head>
-<title> Visualizacion de Grafos con Vis.js</title>
+<title> Visualización de Grafos con Vis.js</title>
 
 <body>
     <?php
@@ -22,11 +22,11 @@
     session_start();
     if (!isset($_SESSION["grafo"])) {
     $_SESSION["grafo"] = new grafo();
-    echo "<script language='javascript'>alert('Se estan implementando el uso de las cookies');</script>";
+    echo "<script language='javascript'>alert('Se están implementando el uso de cookies');</script>";
     }
 ?>
     <header>
-        <h1>Visualizacion de Grafos Php y Vis.js</h1>
+        <h1>Visualización de Grafos PHP y Vis.js</h1>
     </header>
     <div class="grafo1" id="grafo1"></div>
     <div class="wrapper">
@@ -69,7 +69,7 @@
             if (isset($_POST["VerAdyacente"])) {
             $x = ( $_SESSION["grafo"]->getAdyacentes($_POST["VerAdyacente"]));
             if ($x == null) {
-                echo "<script language='javascript'>alert('No Existen Adyacentes del Vertice Ingresado');</script>";
+                echo "<script language='javascript'>alert('No Existen Adyacentes del Vértice Ingresado');</script>";
                 } else {
                     echo"<span>".$x."</span>";
             }
@@ -88,7 +88,7 @@
                 echo "<br><p> El Grado del Vertice " . ($_POST["VerGrado"]) . " es: </p>";
                 echo "<p>". $_SESSION["grafo"]->grado($_POST["VerGrado"])."</p>";
             }else{
-                echo "<script>alert('El vertice no posee vertices vecinas o no se encuentra registrados');</script>";
+                echo "<script>alert('El vértice no posee adyacentes o no se encuentra registrado');</script>";
             }
         }
         ?>
@@ -224,7 +224,7 @@
     </script>
     <script src="verVertice.js"></script>
     <footer>
-        <p>Creado y diseñodo por:  <a href="https://aulavirtual.cuc.edu.co/moodle/user/profile.php?id=149989" target="_blank" rel="noopener noreferrer">@Jesus Garcia</a> - <a href="https://aulavirtual.cuc.edu.co/moodle/user/profile.php?id=149267" target="_blank" rel="noopener noreferrer">@Nelson Morales</a> - <a href="https://aulavirtual.cuc.edu.co/moodle/user/profile.php?id=151565" target="_blank" rel="noopener noreferrer">@Yan De la Torre</a></p>
+        <p>Creado y diseñado por:  <a href="https://aulavirtual.cuc.edu.co/moodle/user/profile.php?id=149989" target="_blank" rel="noopener noreferrer">@Jesus Garcia</a> - <a href="https://aulavirtual.cuc.edu.co/moodle/user/profile.php?id=149267" target="_blank" rel="noopener noreferrer">@Nelson Morales</a> - <a href="https://aulavirtual.cuc.edu.co/moodle/user/profile.php?id=151565" target="_blank" rel="noopener noreferrer">@Yan De la Torre</a></p>
     </footer>
 </body>
 </html>
