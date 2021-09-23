@@ -10,13 +10,13 @@
 </head>
 	<style type="text/css">
 		body{
-            color: white;
-			background: black;
+            color: black;
+			background: white;
 		}
         #grafo1{
             width: 100%;
             height: 400px;
-            border: 5px solid white;
+            border: 5px solid black;
             }
 	</style>
 
@@ -54,22 +54,22 @@
     <h2>Ver vertice</h2>
         <form action="index.php" method="post" id="Mostrar" >
             <label> Id vertice : </label>
-            <input type="text" name="VerVertice" required>
-            <input type="submit" value="Mostrar" >
+            <input type="text" name="VerVertice" id="VerVertice" required >
+            <input type="button" value="Mostrar" id="Mostrar_vertice">
         </form>
     <br><hr>
 
     <h2>Ver adyacente</h2>
         <form action="index.php" method="post" id="Mostrar" >
             <label> Id del vertice : </label>
-            <input type="text" name="VerAdyacente" required>
-            <input type="submit" value="Mostrar" >
+            <input type="text" name="VerAdyacente" id="VerAdyacentes" required>
+            <input type="submit" value="Mostrar" id="MostrarAdyacentes" >
         </form>
         <?php
             if (isset($_POST["VerAdyacente"])) {
             echo "<br>";
             $x = ( $_SESSION["grafo"]->getAdyacentes($_POST["VerAdyacente"]));
-            if ($x == null) {                
+            if ($x == null) {
                 echo "<script language='javascript'>alert('No Existen Adyacentes del Vertice Ingresado');</script>";
                 } else {
                     print_r($x);
@@ -126,29 +126,25 @@
             }
         }
 
-        if (isset($_POST["VerVertice"])) {
-            echo "<br>";
-            print_r($_SESSION["grafo"]->getVertice($_POST["VerVertice"]));
-        }
-
 
         if (isset($_POST["EliminarVertice"])) {
             $B = $_SESSION["grafo"]->eliminarVertice($_POST["EliminarVertice"]);
             if (!$B) {
-                echo "<script language='javascript'>alert('Por favor Ingrese un Vertice Valido');</script>";               
+                echo "<script language='javascript'>alert('Por favor Ingrese un Vertice Valido');</script>";
             }
         }
 
         if (isset($_POST["OrigenE"]) && isset($_POST["DestinoE"])) {
             $B = $_SESSION["grafo"]->eliminarArista($_POST["OrigenE"], $_POST["DestinoE"]);
             if (!$B) {
-                echo "<script language='javascript'>alert('Por favor Ingrese una Arista Valida');</script>";               
+                echo "<script language='javascript'>alert('Por favor Ingrese una Arista Valida');</script>";
             }
         }
 
 ?>
 <div class="grafo1" id="grafo1"></div>
     <script>
+        var vertice_anterior=null;
         var nodos = new vis.DataSet([
         <?php
             $p = count($_SESSION["grafo"]->getVectorV());
@@ -188,15 +184,56 @@
             edges: aristas
         };
         var opciones = {
+        nodes: {
+            borderWidthSelected: 10,
+            color:{
+                border: 'BLUE',
+                background: 'White',
+                highlight: {
+                    border: 'RED',
+                    background: 'White'
+                }
+            }    
+        },
         edges: {
-            arrows: {
-                to: {
+            color: {
+                color:'BLACK',
+                highlight:'RED',
+            },
+            arrows:{
+                to:{
                     enabled: true
                 }
             }
         }
     }
     var grafo = new vis.Network(contenedor, datos, opciones);
+
+    const resaltar_aristas = ()=>{
+        const vertice = document.getElementById('VerVertice').value;
+        var edges = grafo.getConnectedEdges(vertice);
+        grafo.selectEdges(edges, opciones);
+        console.log(edges);
+    }
+
+    const Boton = document.getElementById('Mostrar_vertice');
+    Boton.addEventListener('click', () => {
+        const vertice = document.getElementById('VerVertice').value;
+        if(vertice_anterior == null){
+            console.log("Si no pongo este log sale un vertice de la nada :(")
+        }else{
+            nodos.update([{id: vertice_anterior, color:{border: "Blue"} }]);
+        }
+        var node = nodos.get(vertice);
+        if(node == null){
+            alert("El nodo ingresado no existe");
+        }else{
+            vertice_anterior = vertice;
+            grafo.unselectAll();
+            resaltar_aristas();
+            nodos.update([{id: vertice, color:{border: "RED"} }]);
+        }
+    });
     </script>
 </body>
 </html>
