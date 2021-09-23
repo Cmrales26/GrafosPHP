@@ -1,0 +1,110 @@
+*{
+    margin: 0px;
+    padding: 0;
+}
+body{
+    font-family: 'Source Code Pro', monospace;
+    background: #444444;
+    color: black;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+body::-webkit-scrollbar{
+    background: transparent;
+    width: 7px;
+    border-radius: 20px;
+}
+body::-webkit-scrollbar-thumb{
+    border: 5px solid #EDEDED;
+    border-radius: 90px;
+}
+label{
+    font-size: 20px;
+}
+h1,h2{
+    color: #EDEDED;
+    margin-bottom: 5px;
+}
+p{
+    color: #EDEDED;
+    text-align: center;
+}
+span{
+    color: #EDEDED;
+    text-align: initial;
+}
+header{
+    margin-bottom: 10px;
+    padding-top: 15px;
+    height: 50px;
+    background-color: #444444;
+    text-align: center;
+}
+.grafo1{
+    background: #171717;
+    border: 4px solid #DA0037;
+    border-radius: 8px;
+    width: 85%;
+    margin: auto;
+    height: 400px; 
+}
+.Fila {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.Columnas{
+    margin: 2px;
+    padding: 10px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+}
+.wrapper{
+    background-color:#444444;
+}
+input[type=text],[type=number] {
+    width: 50%;
+    height: 2px;
+    padding: 12px 20px;
+    margin: 8px 0;
+}
+input[type=text]:focus{
+    border: 3px solid black;
+}
+input[type=button], input[type=submit]{
+    background-color: #DA0037;
+    border: none;
+    color: white;
+    padding: 10px 22px;
+    border-radius: 2px;
+    text-decoration: none;
+    margin: 1px 1px;
+    cursor: pointer;
+    transition: transform .2s;
+}
+input[type=button]:hover, input[type=submit]:hover{
+    transform: scale(1.2);
+}
+footer{
+    border-radius: 2px;
+    background-color: #171717;
+    color: #EDEDED;
+    font-size: 20px;
+    position: static !important;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 25px ;
+}
+a{
+    text-decoration: underline;
+    color:#DA0037;
+    text-align: end;
+    
+}

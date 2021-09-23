@@ -63,10 +63,12 @@ Class Grafo{
 		}
 
 		//recibe el id del vertice y retorna grado de salida del mismo
-		public function gradoSalida($v){
-
-			return count($this->matrizA[$v]);
-
+		public function gradoSalida($v){	
+			if ($this->matrizA[$v] != null) {
+				return count($this->matrizA[$v]);
+			}else{
+				return 0;
+			}
 		}
 
 		public function gradoEntrada($v){
@@ -82,15 +84,18 @@ Class Grafo{
 					}
 				}
 			}
-
 			return $gr;
 		}
 
 		//recibe el id del vertice y retorna grado del mismo
 		public function grado($v){
-
-			return $this->gradoSalida($v) + $this->gradoEntrada($v);
-
+			if ($this->gradoSalida($v)==0) {
+				return $this->gradoEntrada($v);
+			}else if($this->gradoSalida($v) == 0 && $this->gradoEntrada($v)==0){
+				return 0;
+			}else{
+				return $this->gradoSalida($v) + $this->gradoEntrada($v);
+			}
 		}
 
 		//recibe id de vertice origen y destino

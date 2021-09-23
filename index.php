@@ -1,26 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type= "text/javascript" src= " vis/dist/vis.js"></script>
+    <script type="text/javascript" src=" vis/dist/vis.js"></script>
     <link href="vis/dist/vis.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="style/Style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;700&display=swap"
+        rel="stylesheet">
     <title>Visualizacion de Grafos con Vis.js</title>
 </head>
-	<style type="text/css">
-		body{
-            color: black;
-			background: white;
-		}
-        #grafo1{
-            width: 100%;
-            height: 400px;
-            border: 5px solid black;
-            }
-	</style>
+<title> Visualizacion de Grafos con Vis.js</title>
 
-	<title> Visualizacion de Grafos con Vis.js</title>
 <body>
     <?php
     include("grafo.php");
@@ -30,88 +25,98 @@
     echo "<script language='javascript'>alert('Se estan implementando el uso de las cookies');</script>";
     }
 ?>
-    <h2>Agregar vertice</h2>
-        <form action="index.php" method="post" id="Agregar" >
-            <label> Id vertice :  </label>
-            <input type="text" name="AgregarVertice" required>
-            <input type="submit" value="Agregar" >
-        </form>
-    <br><hr>
+    <header>
+        <h1>Visualizacion de Grafos Php y Vis.js</h1>
+    </header>
+    <div class="grafo1" id="grafo1"></div>
+    <div class="wrapper">
+        <div class="Fila">
+            <div class="Columnas">
+                <div class="Columna_1">
+                    <h2>Agregar vertice</h2>
+                    <form action="index.php" method="post" id="Agregar">
+                        <input type="text" name="AgregarVertice" placeholder="ID DEL VERTICE" required>
+                        <input type="submit" value="Agregar">
+                    </form>
+                    <br>
 
-    
-    <h2>Agregar Arista</h2>
-        <form action="index.php" method="post" id= "Agregar">	
-            <label> Vertice origen : </label>
-            <input type="text" name="Origen" required>
-            <label> Vertice Destino : </label>
-            <input type="text" name="Destino" required>
-            <label> Peso : </label>
-            <input type="number" name="Peso" required>
-            <input type="submit" value="Agregar">
-        </form>
-    <br><hr>
+                    <h2>Agregar Arista</h2>
+                    <form action="index.php" method="post" id="Agregar">
+                        <input type="text" name="Origen" placeholder="VERTICE DE ORIGEN" required>
+                        <br><br>
+                        <input type="text" name="Destino" placeholder="VERTICE DE DESTINO" required>
+                        <br><br>
+                        <input type="number" name="Peso" placeholder="PESO O PONDERADO" required>
+                        <input type="submit" value="Agregar" class="Agregar">
+                    </form>
+                    <br>
+                </div>
+            </div>
 
-    <h2>Ver vertice</h2>
-        <form action="index.php" method="post" id="Mostrar" >
-            <label> Id vertice : </label>
-            <input type="text" name="VerVertice" id="VerVertice" required >
-            <input type="button" value="Mostrar" id="Mostrar_vertice">
-        </form>
-    <br><hr>
-
-    <h2>Ver adyacente</h2>
-        <form action="index.php" method="post" id="Mostrar" >
-            <label> Id del vertice : </label>
-            <input type="text" name="VerAdyacente" id="VerAdyacentes" required>
-            <input type="submit" value="Mostrar" id="MostrarAdyacentes" >
-        </form>
-        <?php
+            <div class="Columnas">
+                <div class="Columna_2">
+                    <h2>Ver vertice</h2>
+                    <form action="index.php" method="post" id="Mostrar">
+                        <input type="text" name="VerVertice" placeholder="ID DEL VERTICE" id="VerVertice" required>
+                        <input type="button" value="Mostrar" id="Mostrar_vertice">
+                    </form>
+                    <h2>Ver adyacente</h2>
+                    <form action="index.php" method="post" id="Mostrar">
+                        <input type="text" name="VerAdyacente" placeholder="ID DEL VERTICE" id="VerAdyacentes" required>
+                        <input type="submit" value="Mostrar" id="MostrarAdyacentes">
+                    </form>
+                    <?php
             if (isset($_POST["VerAdyacente"])) {
-            echo "<br>";
             $x = ( $_SESSION["grafo"]->getAdyacentes($_POST["VerAdyacente"]));
             if ($x == null) {
                 echo "<script language='javascript'>alert('No Existen Adyacentes del Vertice Ingresado');</script>";
                 } else {
-                    print_r($x);
+                    echo"<span>".$x."</span>";
             }
         }
         ?>
-    <br><hr>
-
-    <h2>Ver grado</h2>
-        <form action="index.php" method="post" id="Mostrar" >
-            <label> Id del vertice : </label>
-            <input type="text" name="VerGrado" required>
-            <input type="submit" value="Mostrar" >
+        <br>
+        <h2>Ver grado</h2>
+        <form action="index.php" method="post" id="Mostrar">
+            <input type="text" name="VerGrado" placeholder="ID DEL VERTICE" required>
+            <input type="submit" value="Mostrar">
         </form>
         <?php
             if (isset($_POST["VerGrado"])) {
-            echo "<br> El Grado del Vertice " . ($_POST["VerGrado"]) . " es: ";
-            print_r($_SESSION["grafo"]->grado($_POST["VerGrado"]));
+            $grado = ($_SESSION["grafo"]->grado($_POST["VerGrado"]));
+            if ($grado != null) {
+                echo "<br><p> El Grado del Vertice " . ($_POST["VerGrado"]) . " es: </p>";
+                echo "<p>". $_SESSION["grafo"]->grado($_POST["VerGrado"])."</p>";
+            }else{
+                echo "<script>alert('El vertice no posee vertices vecinas o no se encuentra registrados');</script>";
+            }
         }
         ?>
-    <br><hr>
+        </div>
+    </div>
+    
+    <div class="Columnas">
+        <div class="Columna_3">
+            <br>
+            <h2>Eliminar vertice</h2>
+            <form action="index.php" method="post" id="Eliminar">
+                <input type="text" name="EliminarVertice" placeholder="ID DEL VERTICE" required>
+                <input type="submit" value="Eliminar">
+            </form>
+            <br>
+            <h2>Eliminar arista</h2>
+            <form action="index.php" method="post" id="Eliminar">
+                <input type="text" name="OrigenE" placeholder="VERTICE DE ORIGEN" required>
+                <br></br>
+                <input type="text" name="DestinoE" placeholder="VERTICE DE DESTINO" required>
+                <input type="submit" value="Eliminar">
+            </form>
+            <br>
+        </div>
+    </div>
+</div>
+</div>
 
-
-    <h2>Eliminar vertice</h2>
-        <form action="index.php" method="post" id="Eliminar" >
-        <label> Id del vertice : </label>
-            <input type="text" name="EliminarVertice" required>
-            <input type="submit" value="Eliminar" >
-        </form>
-    <br><hr>
-
-    <h2>Eliminar arista</h2>
-        <form action="index.php" method="post" id= "Eliminar">	
-            <label> Vertice origen : </label>
-            <input type="text" name="OrigenE" required>
-            <label> Vertice Destino : </label>
-            <input type="text" name="DestinoE" required>
-            <input type="submit" value="Eliminar">
-        </form>
-    <br><hr>
-
-        
     <?php
         
         if (isset($_POST["AgregarVertice"])) {
@@ -142,10 +147,9 @@
         }
 
 ?>
-<div class="grafo1" id="grafo1"></div>
     <script>
-        var vertice_anterior=null;
-        var nodos = new vis.DataSet([
+    var vertice_anterior = null;
+    var nodos = new vis.DataSet([
         <?php
             $p = count($_SESSION["grafo"]->getVectorV());
             $cant = 0;
@@ -159,9 +163,9 @@
             }
         ?>
     ]);
-            
-        var aristas = new vis.DataSet([
-            <?php
+
+    var aristas = new vis.DataSet([
+        <?php
             $z = count($_SESSION["grafo"]->getMatrizA());
             foreach ($_SESSION["grafo"]->getMatrizA() as $x => $adyas){
             if($adyas != null){
@@ -175,65 +179,52 @@
                 }
             }
             ?>
-        ]);
-            
-        var contenedor = document.getElementById("grafo1");
+    ]);
 
-        var datos = {
-            nodes: nodos,
-            edges: aristas
-        };
-        var opciones = {
+    var contenedor = document.getElementById("grafo1");
+
+    var datos = {
+        nodes: nodos,
+        edges: aristas
+    };
+    var opciones = {
+        interaction: {
+            zoomView: false
+        },
         nodes: {
+            borderWidth: 2,
             borderWidthSelected: 10,
-            color:{
-                border: 'BLUE',
-                background: 'White',
+            color: {
+                border: '#444444',
+                background: '#EDEDED',
                 highlight: {
-                    border: 'RED',
-                    background: 'White'
+                    border: '#DA0037',
+                    background: '#EDEDED'
+
                 }
-            }    
+            },
+            font: {
+                color: '#DA0037',
+                size: 18,
+            }
         },
         edges: {
             color: {
-                color:'BLACK',
-                highlight:'RED',
+                color: '#EDEDED',
+                highlight: '#DA0037',
             },
-            arrows:{
-                to:{
+            arrows: {
+                to: {
                     enabled: true
                 }
             }
         }
     }
     var grafo = new vis.Network(contenedor, datos, opciones);
-
-    const resaltar_aristas = ()=>{
-        const vertice = document.getElementById('VerVertice').value;
-        var edges = grafo.getConnectedEdges(vertice);
-        grafo.selectEdges(edges, opciones);
-        console.log(edges);
-    }
-
-    const Boton = document.getElementById('Mostrar_vertice');
-    Boton.addEventListener('click', () => {
-        const vertice = document.getElementById('VerVertice').value;
-        if(vertice_anterior == null){
-            console.log("Si no pongo este log sale un vertice de la nada :(")
-        }else{
-            nodos.update([{id: vertice_anterior, color:{border: "Blue"} }]);
-        }
-        var node = nodos.get(vertice);
-        if(node == null){
-            alert("El nodo ingresado no existe");
-        }else{
-            vertice_anterior = vertice;
-            grafo.unselectAll();
-            resaltar_aristas();
-            nodos.update([{id: vertice, color:{border: "RED"} }]);
-        }
-    });
     </script>
+    <script src="verVertice.js"></script>
+    <footer>
+        <p>Creado y diseñodo por:  <a href="https://aulavirtual.cuc.edu.co/moodle/user/profile.php?id=149989" target="_blank" rel="noopener noreferrer">@Jesus Garcia</a> - <a href="https://aulavirtual.cuc.edu.co/moodle/user/profile.php?id=149267" target="_blank" rel="noopener noreferrer">@Nelson Morales</a> - <a href="https://aulavirtual.cuc.edu.co/moodle/user/profile.php?id=151565" target="_blank" rel="noopener noreferrer">@Yan De la Torre</a></p>
+    </footer>
 </body>
 </html>
