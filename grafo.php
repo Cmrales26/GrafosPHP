@@ -129,5 +129,39 @@ Class Grafo{
 			return true;
 		}
 
+		public function Caminomascorto($a,$b){
+			$s = array();
+			$q = array();
+			foreach (array_keys($this->matrizA) as $val) {
+				$q[$val] = 99999;
+				$q[$a] = 0;
+				while (!empty($q)) {
+					
+					$min = array_search(min($q),$q);
+					if ($min == $b) {
+						break;
+					}
+					foreach ($this->matrizA[$min] as $key => $val) {
+						# code...
+						if (!empty($q[$key])&&$q[$min]+$val<$q[$key]) {
+							$q[$key]= $q[$min]+$val;
+							$s[$key]= array($min, $q[$key]);
+						}
+						unset($q[$min]);
+					}
+					$path = array();
+					$pos = $b;
+					while ($pos!=$a) {
+						# code...
+						$path[]=$pos;
+						$pos = $s[$pos][0];
+					}
+					$path[] = $a;
+					$path = array_reverse($path);
+					return $path;
+				}
+			}
+		}
+
 }
 ?>
