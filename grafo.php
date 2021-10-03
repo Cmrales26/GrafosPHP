@@ -163,5 +163,41 @@ Class Grafo{
 			}
 		}
 
+		public function DFSVisitar($Nodo, $tiempo){
+			$Visitado = array();
+			$Visitado[$Nodo] = "VISITADO";
+			$tiempo = $tiempo+1;
+			$d[$Nodo]= $tiempo;
+			foreach ($Nodo as $key => $value) {
+				# code...
+			}
+			$Visitado[$Nodo]= "TERMINADO";
+			$tiempo = $tiempo + 1;
+			$f = array();
+			$f[$Nodo]=$tiempo;
+		}
+
+		public function DFS($G,$vertice){
+			$Visitado = array();
+			$padre = array();
+			$tiempo = 0;
+			foreach ($vertice as $key => $value) {
+				# code...
+				$Visitado[$key]= "NO VISITADO";
+				$padre[$key] = null;
+				$tiempo = 0;
+			}
+			foreach ($vertice as $key => $value) {
+				# code...
+				if ($Visitado[$vertice]=="NO VISITADO") {
+					# code...
+					$this->DFSVisitar($vertice,$tiempo);
+				}
+			}
+
+		}
+
+		
+
 }
 ?>
