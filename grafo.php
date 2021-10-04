@@ -144,7 +144,7 @@ Class Grafo{
 							$s[$key]= array($min, $q[$key]);
 						}
 						unset($q[$min]);
-					
+				}
 					$path = array();
 					$pos = $b;
 					while ($pos!=$a) {
@@ -155,7 +155,7 @@ Class Grafo{
 					$path[] = $a;
 					$path = array_reverse($path);
 					return $path;
-				}
+				
 			
 			
 		}
