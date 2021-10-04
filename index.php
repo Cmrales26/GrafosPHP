@@ -92,19 +92,6 @@
             }
         }
         ?>
-        <br>
-        <h2>Ver el camino mas corto</h2>
-        <form action="index.php" method="post" id="Mostrar">
-            <input type="text" name="nodoA" placeholder="Ingrese el nodo Inicial" required>
-            <br><br>
-            <input type="text" name="nodoB" placeholder="Ingrese el nodo Inicial" required>
-            <input type="submit" value="Mostrar" id="mostrarCaminoCorto">
-        </form>
-        <?php
-            if(isset($_POST['nodoA']) && isset($_POST['nodoB'])){
-                
-            }
-        ?>
         </div>
     </div>
     
@@ -127,9 +114,68 @@
             <br>
         </div>
     </div>
+    <div class="Columnas">
+        <div class="Columna_4">
+        <h2>Ver el camino mas corto</h2>
+        <form action="index.php" method="post" id="Mostrar">
+            <input type="text" name="nodoA" placeholder="Ingrese el nodo Inicial" required>
+            <br><br>
+            <input type="text" name="nodoB" placeholder="Ingrese el nodo Final" required>
+            <input type="submit" value="Mostrar" id="mostrarCaminoCorto">
+        </form>
+        <?php
+        if(isset($_POST['nodoA']) && isset($_POST['nodoB'])){
+            $C = $_SESSION["grafo"]->caminoMasCorto($_POST["nodoA"], $_POST["nodoB"]);
+            $C_S = implode("->",$C);
+            echo"<p>El camino mas corto es: "."<br>".$C_S."</p>";
+        }
+        ?>
+        </div>
+    </div>
 </div>
 </div>
+<div class="abajo">
+    <div class="Fila">
+            <div class="Columnas">
+                <div class="Columna_1">
 
+        <br>
+        <h2>Ver recorrido de anchura</h2>
+        <form action="index.php" method="post" id="recorridoAnchura">
+            <input type="text" name="NodoC" placeholder="Ingrese el nodo para ver su recorrido de anchura">
+            <input type="submit" value="Mostrar" id="mostrarRA">
+        </form>
+        <?php
+            if(isset($_POST["NodoC"])){
+                $A = $_SESSION["grafo"]->BFS($_POST["NodoC"]);
+                $A_S = implode("->",$A);
+                echo"<p>El recorrido de anchura es: <br></p>";
+                echo "<P>$A_S</P>";
+            }
+        ?>
+        </div>
+        </div>
+
+        
+        <div class="Columnas">
+            <div class="Columna_2">
+                
+        <h2>Ver recorrido de profundidad</h2>
+        <form action="index.php" method="post" id= "recorridoProfundidad">
+            <input type="text" name="NodoD" placeholder="Ingrese el nodo para ver su recorrido de profundidad">
+            <input type="submit" value="Mostrar" id="mostrarRP">
+        </form>
+        <?php
+        if(isset($_POST["NodoD"])){
+            $_SESSION["grafo"]->DFS($_POST["NodoD"]);
+            // $B_S = implode("->",$B);
+            // echo $B_S;
+        }
+        ?>
+            </div>
+        </div>
+    </div>
+</div>
     <?php
         
         if (isset($_POST["AgregarVertice"])) {
@@ -159,7 +205,10 @@
             }
         }
 
+        
 ?>
+
+
     <script>
     var vertice_anterior = null;
     var nodos = new vis.DataSet([
@@ -223,6 +272,7 @@
         },
         edges: {
             color: {
+                inherit: false,
                 color: '#EDEDED',
                 highlight: '#DA0037',
             },
@@ -234,7 +284,16 @@
         }
     }
     var grafo = new vis.Network(contenedor, datos, opciones);
+    <?php
+        if(isset($_POST['nodoA']) && isset($_POST['nodoB'])){
+            $C = $_SESSION["grafo"]->caminoMasCorto($_POST["nodoA"], $_POST["nodoB"]);
+            foreach ($C as $id => $vertice) {
+                echo "nodos.update([{id: '$vertice',color: {border: 'RED'}}]);";
+        }
+    }
+    ?>
     </script>
+    
     <script src="verVertice.js"></script>
     <footer>
         <p>Creado y diseñado por:  <a href="https://aulavirtual.cuc.edu.co/moodle/user/profile.php?id=149989" target="_blank" rel="noopener noreferrer">@Jesus Garcia</a> - <a href="https://aulavirtual.cuc.edu.co/moodle/user/profile.php?id=149267" target="_blank" rel="noopener noreferrer">@Nelson Morales</a> - <a href="https://aulavirtual.cuc.edu.co/moodle/user/profile.php?id=151565" target="_blank" rel="noopener noreferrer">@Yan De la Torre</a></p>

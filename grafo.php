@@ -7,6 +7,9 @@ Class Grafo{
 		private $vectorV;
 		private $dirigido;
 
+		public $visited = [];
+		public $graph = [];
+
 		public function __construct($dir = true){
 			$this->matrizA = null;
 			$this->vectorV = null;
@@ -16,13 +19,12 @@ Class Grafo{
 		//recibe objeto tipo vertice, no pueden repetirce id
 		public function agregarVertice($v){
 			if(!isset($this->vectorV[$v->getId()])){
-				$this->matrizA[$v->getId()] = null;
-				$this->vectorV[$v->getId()] = $v;
-			} else{
-				return false;
-			}
-			return true;
-
+                $this->matrizA[$v->getId()] = [];
+                $this->vectorV[$v->getId()] = $v;
+            } else{
+                return false;
+            }
+            return true;
 		}
 
 		public function getVertice($v){
@@ -52,6 +54,10 @@ Class Grafo{
 				return false;
 			}
 			return $mensaje;
+		}
+
+		public function getAdyacentes2($v){
+			return $this->matrizA[$v];
 		}
 
 		public function getMatrizA(){
@@ -129,80 +135,69 @@ Class Grafo{
 			return true;
 		}
 
-		public function Caminomascorto($a,$b){
-			$s = array();
-			$q = array();
-			foreach (array_keys($this->matrizA) as $val) $q[$val] = 99999;
-				$q[$a] = 0;
-				while (!empty($q)) {
-					
-					$min = array_search(min($q),$q);
-					if ($min == $b) break;
-					
-					foreach ($this->matrizA[$min] as $key => $val) if (!empty($q[$key])&&$q[$min]+$val<$q[$key]) {
-							$q[$key]= $q[$min]+$val;
-							$s[$key]= array($min, $q[$key]);
-						}
-						unset($q[$min]);
+		public function caminoMasCorto($a,$b){ //TERMINADO
+            $S = array();
+            $Q = array();
+            foreach(array_keys($this->matrizA) as $val) $Q[$val] = 99999;
+            $Q[$a] = 0;
+            // inicio calculo
+            while(!empty($Q)){
+                $min = array_search(min($Q), $Q);
+                if($min == $b) break;
+			foreach ($this->matrizA[$min] as $key => $val) if(!empty($Q[$key]) && $Q[$min]+ $val < $Q[$key]) {
+					$Q[$key] = $Q[$min] + $val;
+                    $S[$key] = array($min, $Q[$key]);
 				}
-					$path = array();
-					$pos = $b;
-					while ($pos!=$a) {
-						# code...
-						$path[]=$pos;
-						$pos = $s[$pos][0];
-					}
-					$path[] = $a;
-					$path = array_reverse($path);
-					return $path;
-				
-			
-			
-		}
-
+                unset($Q[$min]);
+            }
+            $path = array();
+            $pos = $b;
+            while($pos != $a){
+                $path[] = $pos;
+                $pos = $S[$pos][0];
+            }
+            $path[] = $a;
+            $path = array_reverse($path);
+            return $path;
+        }
 
 		public function DFS($Nodo){
-			$pila = new SplStack;
-			$NodosAdya = new SplStack;
+			$pila = new SplStack();
 			$NodoA = $this->getVertice($Nodo);
-			if ($NodoA!=null) {
+			$recorrido = [];
+			if ($NodoA != null) {
 				$pila->push($NodoA);
 				while ($pila->count()>0) {
 					$NodoV = $pila->pop();
 					if ($NodoV->getVisitado()==false) {
-						# code...
 						$NodoV->setVisitado(true);
-						echo "$NodoV->getId";	
-						$NodosAdya->push($NodoV);
+						array_push($recorrido, $NodoV);	
+						$recorrido = $pila->push($this->getAdyacentes2($NodoV->getId()));
 					}
 				}
 			}
-			
-
+			return $recorrido;
 		}
-
-		
 
 		public function BFS($Nodo){
-			$cola = new SplQueue;
-			$NodosAdya = new SplQueue;
-			$NodoA = $this->getVertice($Nodo);
-			if ($Nodo!=null) {
-				$cola->enqueue($NodoA);
-				while ($cola->count()>0) {
-					$NodoV = $cola->dequeue();
-					if ($NodoV->getVisitado()==false) {
-						# code...
-						$NodoV->setVisitado(true);
-						echo "$NodoV->getId";	
-						$NodosAdya->enqueue($NodoV);
+			$cola = [];
+			$recorrido = [];
+			if(isset($Nodo)){
+				array_push($cola, $Nodo);
+				while (count($cola)>0) {
+					$NodoA = array_shift($cola);
+					array_push($recorrido,$NodoA);
+					$adyacentes = array_keys($this->getAdyacentes2($NodoA));
+					sort($adyacentes);
+					foreach ($adyacentes as $key) {
+						if (!in_array($key, $recorrido)) {
+							array_push($cola,$key);
+						}
 					}
 				}
 			}
-			
+			$array = array_unique($recorrido, $sort_flags = SORT_REGULAR);
+			return $array;
 		}
-
-		
-
 }
 ?>
