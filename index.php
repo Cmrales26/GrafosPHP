@@ -288,8 +288,12 @@
     <?php
         if(isset($_POST['nodoA']) && isset($_POST['nodoB'])){
             $C = $_SESSION["grafo"]->caminoMasCorto($_POST["nodoA"], $_POST["nodoB"]);
-            foreach ($C as $id => $vertice) {
+            if ($C != null) {
+                foreach ($C as $id => $vertice) {
                 echo "nodos.update([{id: '$vertice',color: {border: 'RED'}}]);";
+            }
+            }else{
+                echo "alert('El nodo ingresado no se encuentra registrado')";
         }
     }
     ?>
