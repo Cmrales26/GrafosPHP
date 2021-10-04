@@ -167,9 +167,10 @@
         </form>
         <?php
         if(isset($_POST["NodoD"])){
-            $_SESSION["grafo"]->DFS($_POST["NodoD"]);
-            // $B_S = implode("->",$B);
-            // echo $B_S;
+            $B = $_SESSION["grafo"]->DFS($_POST["NodoD"]);
+            $B_S = implode("->",$B);
+            echo "<p> El recorrido de profundidad es:<br> </p>";
+            echo "<p>$B_S</p>";
         }
         ?>
             </div>

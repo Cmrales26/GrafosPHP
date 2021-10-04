@@ -161,23 +161,26 @@ Class Grafo{
             return $path;
         }
 
-		public function DFS($Nodo){
-			$pila = new SplStack();
-			$NodoA = $this->getVertice($Nodo);
-			$recorrido = [];
-			if ($NodoA != null) {
-				$pila->push($NodoA);
-				while ($pila->count()>0) {
-					$NodoV = $pila->pop();
-					if ($NodoV->getVisitado()==false) {
-						$NodoV->setVisitado(true);
-						array_push($recorrido, $NodoV);	
-						$recorrido = $pila->push($this->getAdyacentes2($NodoV->getId()));
-					}
-				}
-			}
-			return $recorrido;
+	public function DFS($n){
+		$R = [];
+		if (isset($n)) {
+			$R = $this->DFSR($n, $R);
 		}
+		return$R;
+	}
+	
+	private function DFSR($n, $r){
+		array_push($r, $n);
+		$adya = array_keys($this->getAdyacentes2($n));
+		sort($adya);
+		foreach ($adya as $n_adya) {
+			if (!in_array($n_adya, $r)){
+				$r = $this->DFSR($n_adya, $r);
+			}
+		}
+		return$r;
+	}
+		
 
 		public function BFS($Nodo){
 			$cola = [];
