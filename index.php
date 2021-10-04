@@ -92,6 +92,19 @@
             }
         }
         ?>
+        <br>
+        <h2>Ver el camino mas corto</h2>
+        <form action="index.php" method="post" id="Mostrar">
+            <input type="text" name="nodoA" placeholder="Ingrese el nodo Inicial" required>
+            <br><br>
+            <input type="text" name="nodoB" placeholder="Ingrese el nodo Inicial" required>
+            <input type="submit" value="Mostrar" id="mostrarCaminoCorto">
+        </form>
+        <?php
+            if(isset($_POST['nodoA']) && isset($_POST['nodoB'])){
+                
+            }
+        ?>
         </div>
     </div>
     

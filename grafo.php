@@ -132,23 +132,19 @@ Class Grafo{
 		public function Caminomascorto($a,$b){
 			$s = array();
 			$q = array();
-			foreach (array_keys($this->matrizA) as $val) {
-				$q[$val] = 99999;
+			foreach (array_keys($this->matrizA) as $val) $q[$val] = 99999;
 				$q[$a] = 0;
 				while (!empty($q)) {
 					
 					$min = array_search(min($q),$q);
-					if ($min == $b) {
-						break;
-					}
-					foreach ($this->matrizA[$min] as $key => $val) {
-						# code...
-						if (!empty($q[$key])&&$q[$min]+$val<$q[$key]) {
+					if ($min == $b) break;
+					
+					foreach ($this->matrizA[$min] as $key => $val) if (!empty($q[$key])&&$q[$min]+$val<$q[$key]) {
 							$q[$key]= $q[$min]+$val;
 							$s[$key]= array($min, $q[$key]);
 						}
 						unset($q[$min]);
-					}
+					
 					$path = array();
 					$pos = $b;
 					while ($pos!=$a) {
@@ -160,41 +156,50 @@ Class Grafo{
 					$path = array_reverse($path);
 					return $path;
 				}
-			}
+			
+			
 		}
 
-		public function DFSVisitar($Nodo, $tiempo){
-			$Visitado = array();
-			$Visitado[$Nodo] = "VISITADO";
-			$tiempo = $tiempo+1;
-			$d[$Nodo]= $tiempo;
-			foreach ($Nodo as $key => $value) {
-				# code...
-			}
-			$Visitado[$Nodo]= "TERMINADO";
-			$tiempo = $tiempo + 1;
-			$f = array();
-			$f[$Nodo]=$tiempo;
-		}
 
-		public function DFS($G,$vertice){
-			$Visitado = array();
-			$padre = array();
-			$tiempo = 0;
-			foreach ($vertice as $key => $value) {
-				# code...
-				$Visitado[$key]= "NO VISITADO";
-				$padre[$key] = null;
-				$tiempo = 0;
-			}
-			foreach ($vertice as $key => $value) {
-				# code...
-				if ($Visitado[$vertice]=="NO VISITADO") {
-					# code...
-					$this->DFSVisitar($vertice,$tiempo);
+		public function DFS($Nodo){
+			$pila = new SplStack;
+			$NodosAdya = new SplStack;
+			$NodoA = $this->getVertice($Nodo);
+			if ($NodoA!=null) {
+				$pila->push($NodoA);
+				while ($pila->count()>0) {
+					$NodoV = $pila->pop();
+					if ($NodoV->getVisitado()==false) {
+						# code...
+						$NodoV->setVisitado(true);
+						echo "$NodoV->getId";	
+						$NodosAdya->push($NodoV);
+					}
 				}
 			}
+			
 
+		}
+
+		
+
+		public function BFS($Nodo){
+			$cola = new SplQueue;
+			$NodosAdya = new SplQueue;
+			$NodoA = $this->getVertice($Nodo);
+			if ($Nodo!=null) {
+				$cola->enqueue($NodoA);
+				while ($cola->count()>0) {
+					$NodoV = $cola->dequeue();
+					if ($NodoV->getVisitado()==false) {
+						# code...
+						$NodoV->setVisitado(true);
+						echo "$NodoV->getId";	
+						$NodosAdya->enqueue($NodoV);
+					}
+				}
+			}
+			
 		}
 
 		
