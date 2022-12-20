@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src=" vis/dist/vis.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/standalone/umd/vis-network.min.js" integrity="sha512-DOpf3tO7m7MJHkMMRRoNxiJL4CR+TFLYy2XnIOeTh26Hz8j8i9RHrVkXzh+AQ7mffzIFk538/zcQ3Yoo+7VISA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="vis/dist/vis.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="style/Style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
