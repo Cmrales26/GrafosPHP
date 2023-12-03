@@ -1,3 +1,8 @@
+<?php
+    include("grafo.php");
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,8 +24,6 @@
 
 <body>
     <?php
-    include("grafo.php");
-    session_start();
     if (!isset($_SESSION["grafo"])) {
     $_SESSION["grafo"] = new grafo();
     echo "<script language='javascript'>alert('Se están implementando el uso de cookies');</script>";
